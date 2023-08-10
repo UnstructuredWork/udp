@@ -3,7 +3,7 @@ import struct
 
 from .client import Client
 from datetime import datetime
-from parallel import thread_method
+from udp.parallel import thread_method
 
 class StereoClient(Client):
     def __init__(self, cfg, meta, side):
