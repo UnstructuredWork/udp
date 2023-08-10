@@ -1,12 +1,13 @@
-import client
-import parallel
-import stereo_client
-import rgbd_client
+from .client import Client
+from .rgbd_client import RgbdClient
+from .stereo_client import StereoClient
+from .parallel import thread_method, process_method
 
 
 __all__ = [
-    'client',
-    'parallel',
-    'rgbd_client',
-    'stereo_client',
+    "Client",
+    "RgbdClient",
+    "StereoClient",
+    "thread_method",
+    "process_method",
 ]
