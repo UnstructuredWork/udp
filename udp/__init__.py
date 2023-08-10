@@ -8,6 +8,4 @@ __all__ = [
     "Client",
     "RgbdClient",
     "StereoClient",
-    "thread_method",
-    "process_method",
 ]
