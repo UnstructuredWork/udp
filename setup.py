@@ -6,6 +6,7 @@ setup(
     author="SungHyun Nam",
     author_email="tjdgus6255@keti.re.kr",
     packages=find_packages(),
+    py_modules=['udp.parallel'],
     python_requires='>=3.7',
     install_requires=[
         'opencv-python',
