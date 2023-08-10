@@ -30,7 +30,7 @@ class RgbdClient(Client):
     def run(self, data):
         self.rgb = data["rgb"]
         self.depth = data["depth"]
-        self.cam_info = data["intrinsic"]
+        self.cam_info = data["intrinsic"] + b'info' + data["imu"]
         if self.pack_cloud is not None:
             self.bytescode(self.pack_cloud)
 
