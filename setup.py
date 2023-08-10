@@ -6,7 +6,7 @@ setup(
     author="SungHyun Nam",
     author_email="tjdgus6255@keti.re.kr",
     url="https://github.com/UnstructuredWork",
-    packages=['udp'],
+    packages=find_packages(where='udp'),
     python_requires='>=3.7',
     install_requires=[
         'opencv-python',
