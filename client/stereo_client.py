@@ -1,8 +1,8 @@
 import zlib
 import struct
 
-from .client import CamClient
 from datetime import datetime
+from .cam_client import CamClient
 from .utils.parallel import thread_method
 
 
