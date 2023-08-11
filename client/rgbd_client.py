@@ -6,6 +6,7 @@ from .client import Client
 from datetime import datetime
 from utils.parallel import thread_method
 
+
 class RgbdClient(Client):
     def __init__(self, cfg, meta, side):
         super().__init__(cfg, meta, side)
