@@ -2,15 +2,11 @@ from __future__ import division
 import cv2
 import math
 import zlib
-# import socket
 import struct
 import pickle
-# import subprocess
 
-# from nvjpeg import NvJpeg
 from .base import Base
 from datetime import datetime
-# from turbojpeg import TurboJPEG
 from .utils.package import ServicePackage
 from .utils.parallel import thread_method
 
@@ -19,38 +15,15 @@ class ServiceClient(Base):
     def __init__(self, cfg, service):
         super().__init__(cfg)
 
-        # self.cfg = cfg           # same
         self.service = service
-
-        # self.sock = None           # same
-        # self.sock_udp()           # same
-
-        # self.img_num = 1
-
-        # self.duplicate_check = None
 
         self.prev_time = 0
         self.curr_time = 0
 
-        # self.MAX_IMAGE_DGRAM = 2 ** 16 - 256           # same
-
-        # if subprocess.check_output(["nvidia-smi"]):           # same
-        #     self.comp = NvJpeg()
-        # else:
-        #     self.comp = TurboJPEG()
-
         self.data = None
 
         port = getattr(self.cfg.SERVICE, self.service).PORT
-
         self.pack = ServicePackage(self.cfg.SERVICE.TARGET_HOST, port)
-
-    # def __del__(self):           # same
-    #     self.sock.close()
-    #
-    # def sock_udp(self):           # same
-    #     self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    #     self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     def send_udp(self):
         size = len(self.pack.data)

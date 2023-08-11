@@ -1,12 +1,8 @@
 from __future__ import division
 import cv2
 import math
-# import socket
 import struct
-# import subprocess
 
-# from nvjpeg import NvJpeg
-# from turbojpeg import TurboJPEG
 from .base import Base
 from .utils.package import CamPackage
 
@@ -14,23 +10,8 @@ from .utils.package import CamPackage
 class CamClient(Base):
     def __init__(self, cfg, meta, side):
         super().__init__(cfg)
-        # self.sock = None
-        # self.sock_udp()
-
-        # self.img_num = 1
-
-        # self.duplicate_check = None
-
-        # self.MAX_IMAGE_DGRAM = 2 ** 16 - 256
-
-        # self.cfg = cfg
 
         self.side = side
-
-        # if subprocess.check_output(['nvidia-smi']):
-        #     self.comp = NvJpeg()
-        # else:
-        #     self.comp = TurboJPEG()
 
         self.pack_cloud = None
         self.pack_unity = None
@@ -39,13 +20,6 @@ class CamClient(Base):
 
         if cfg.UNITY.SEND:
             self.pack_unity = CamPackage(self.cfg.UNITY, side)
-
-    # def __del__(self):
-    #     self.sock.close()
-    #
-    # def sock_udp(self):
-    #     self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    #     self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     def send_udp(self, package):
         size = len(package.frame)
