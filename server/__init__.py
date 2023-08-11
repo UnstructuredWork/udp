@@ -1,6 +1,4 @@
-from .rgbd_server import RgbdServer
-from .stereo_server import StereoServer
-
+from udp.rgbd_server import RgbdServer
 
 __all__ = [
     "RgbdServer",
