@@ -2,14 +2,15 @@ import cv2
 import zlib
 import struct
 
-from .client import Client
+from .client import CamClient
 from datetime import datetime
 from .utils.parallel import thread_method
 
 
-class RgbdClient(Client):
+class RgbdClient(CamClient):
     def __init__(self, cfg, meta, side):
         super().__init__(cfg, meta, side)
+
         self.rgb       = None
         self.depth     = None
         self.cam_info  = None

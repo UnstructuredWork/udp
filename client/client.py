@@ -1,49 +1,51 @@
 from __future__ import division
 import cv2
 import math
-import socket
+# import socket
 import struct
-import subprocess
+# import subprocess
 
-from nvjpeg import NvJpeg
-from turbojpeg import TurboJPEG
-from .utils.package import Package
+# from nvjpeg import NvJpeg
+# from turbojpeg import TurboJPEG
+from .base import Base
+from .utils.package import CamPackage
 
 
-class Client:
+class CamClient(Base):
     def __init__(self, cfg, meta, side):
-        self.sock = None
-        self.sock_udp()
+        super().__init__(cfg)
+        # self.sock = None
+        # self.sock_udp()
 
-        self.img_num = 1
+        # self.img_num = 1
 
-        self.duplicate_check = None
+        # self.duplicate_check = None
 
-        self.MAX_IMAGE_DGRAM = 2 ** 16 - 256
+        # self.MAX_IMAGE_DGRAM = 2 ** 16 - 256
 
-        self.cfg = cfg
+        # self.cfg = cfg
 
         self.side = side
 
-        if subprocess.check_output(['nvidia-smi']):
-            self.comp = NvJpeg()
-        else:
-            self.comp = TurboJPEG()
+        # if subprocess.check_output(['nvidia-smi']):
+        #     self.comp = NvJpeg()
+        # else:
+        #     self.comp = TurboJPEG()
 
         self.pack_cloud = None
         self.pack_unity = None
         if cfg.CLOUD.SEND:
-            self.pack_cloud = Package(self.cfg.CLOUD, side)
+            self.pack_cloud = CamPackage(self.cfg.CLOUD, side)
 
         if cfg.UNITY.SEND:
-            self.pack_unity = Package(self.cfg.UNITY, side)
+            self.pack_unity = CamPackage(self.cfg.UNITY, side)
 
-    def __del__(self):
-        self.sock.close()
-
-    def sock_udp(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # def __del__(self):
+    #     self.sock.close()
+    #
+    # def sock_udp(self):
+    #     self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    #     self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     def send_udp(self, package):
         size = len(package.frame)

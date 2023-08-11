@@ -1,14 +1,15 @@
 import zlib
 import struct
 
-from .client import Client
+from .client import CamClient
 from datetime import datetime
 from .utils.parallel import thread_method
 
 
-class StereoClient(Client):
+class StereoClient(CamClient):
     def __init__(self, cfg, meta, side):
         super().__init__(cfg, meta, side)
+
         self.rgb = None
 
     def bytescode(self, package):
