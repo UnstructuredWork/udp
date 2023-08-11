@@ -7,24 +7,8 @@ import subprocess
 
 from nvjpeg import NvJpeg
 from turbojpeg import TurboJPEG
+from utils.package import Package
 
-class Package:
-    def __init__(self, cfg, side):
-        self.cfg = cfg
-
-        self.host = self.cfg.HOST
-
-        self.side = side
-
-        self.port = getattr(self.cfg.PORT, self.side)
-        self.size = getattr(self.cfg.SIZE, self.side)
-
-        self.cam_info = None
-
-        self.frame = None
-        self.get_img_time = None
-
-        self.header = None
 
 class Client:
     def __init__(self, cfg, meta, side):

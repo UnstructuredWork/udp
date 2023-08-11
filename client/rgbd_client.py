@@ -1,19 +1,25 @@
+import cv2
 import zlib
 import struct
 
 from .client import Client
 from datetime import datetime
-from udp.parallel import thread_method
+from utils.parallel import thread_method
 
-class StereoClient(Client):
+class RgbdClient(Client):
     def __init__(self, cfg, meta, side):
         super().__init__(cfg, meta, side)
-        self.rgb = None
+        self.rgb       = None
+        self.depth     = None
+        self.cam_info  = None
 
     def bytescode(self, package):
         rgb = self.rgb
+        depth = self.depth
         package.get_img_time = datetime.now().time().isoformat().encode('utf-8')
-        package.frame = self.comp.encode(self.resize(rgb, package), 40)
+        package.cam_info = self.cam_info
+        package.frame = self.comp.encode(self.resize(rgb, package), 40) + b'frame' + \
+                        cv2.imencode('.png', self.resize(depth, package), [cv2.IMWRITE_PNG_COMPRESSION, 4])[1].tobytes()
         check = zlib.crc32(package.frame)
         if self.duplicate_check != check:
             self.duplicate_check = check
@@ -22,7 +28,9 @@ class StereoClient(Client):
 
     @thread_method
     def run(self, data):
-        self.rgb = data
+        self.rgb = data["rgb"]
+        self.depth = data["depth"]
+        self.cam_info = data["intrinsic"] + b'info' + data["imu"]
         if self.pack_cloud is not None:
             self.bytescode(self.pack_cloud)
 
