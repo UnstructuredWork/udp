@@ -7,7 +7,7 @@ import subprocess
 
 from nvjpeg import NvJpeg
 from turbojpeg import TurboJPEG
-from client.utils.package import Package
+from .utils.package import Package
 
 
 class Client:

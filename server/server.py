@@ -12,6 +12,7 @@ from turbojpeg import TurboJPEG
 
 logger = logging.getLogger('__main__')
 
+
 class Server:
     def __init__(self, cfg, port, dname):
         self.cfg = cfg
