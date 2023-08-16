@@ -5,8 +5,8 @@ from datetime import datetime
 
 
 class StereoServer(Server):
-    def __init__(self, cfg, port, dname):
-        super().__init__(cfg, port, dname)
+    def __init__(self, info, dname):
+        super().__init__(info, dname)
 
     def recv_udp(self):
         seg, addr = self.sock.recvfrom(self.MAX_DGRAM)
