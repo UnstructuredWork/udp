@@ -3,6 +3,7 @@ import zlib
 import time
 import socket
 import struct
+import subprocess
 import logging.handlers
 
 from nvjpeg import NvJpeg
@@ -14,19 +15,18 @@ logger = logging.getLogger('__main__')
 
 
 class Server:
-    def __init__(self, cfg, port, dname):
-        self.cfg = cfg
+    def __init__(self, info, dname):
         self.dname = dname
 
         self.isReady = False
 
-        if self.cfg.CAMERA.USE_GPU:
+        if subprocess.check_output(["nvidia-smi"]):
             self.decomp = NvJpeg()
         else:
             self.decomp = TurboJPEG()
 
-        self.HOST = self.cfg.CAMERA.HOST
-        self.PORT = port
+        self.HOST = info[0]
+        self.PORT = info[1]
 
         self.MAX_DGRAM = 2 ** 16
 
