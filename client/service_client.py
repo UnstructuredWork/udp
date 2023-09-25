@@ -1,9 +1,9 @@
 from __future__ import division
 import cv2
+import json
 import math
 import zlib
 import struct
-import pickle
 
 from .base import Base
 from datetime import datetime
@@ -40,13 +40,16 @@ class ServiceClient(Base):
                           str(total_count - count + 1)).encode('utf-8')
 
             try:
-               self.sock.sendto(struct.pack("B", count) + b'end' +
-                                 self.pack.header + b'end' +
-                                 packet_num + b'end' +
-                                 self.pack.get_data_time + b'end' +
-                                 str(len(self.pack.data)).encode('utf-8') + b'end' +
-                                 str(array_pos_start).encode('utf-8') + b'end' +
-                                 self.pack.data[array_pos_start:array_pos_end], (self.pack.host, self.pack.port))
+                if self.service == 'DETECTION':
+                    self.sock.sendto(self.pack.data[array_pos_start:array_pos_end], (self.pack.host, self.pack.port))
+                else:
+                    self.sock.sendto(struct.pack("B", count) + b'end' +
+                                     self.pack.header + b'end' +
+                                     packet_num + b'end' +
+                                     self.pack.get_data_time + b'end' +
+                                     str(len(self.pack.data)).encode('utf-8') + b'end' +
+                                     str(array_pos_start).encode('utf-8') + b'end' +
+                                     self.pack.data[array_pos_start:array_pos_end], (self.pack.host, self.pack.port))
             except OSError:
                 pass
 
@@ -59,7 +62,7 @@ class ServiceClient(Base):
         data = self.data
         self.pack.get_data_time = datetime.now().time().isoformat().encode('utf-8')
         if self.service == 'DETECTION':
-            self.pack.data = zlib.compress(pickle.dumps(data))
+            self.pack.data = zlib.compress(json.dumps(data).encode('utf-8'))
         elif self.service == 'MONO_DEPTH':
             self.pack.data = cv2.imencode('.png', data, [cv2.IMWRITE_PNG_COMPRESSION, 4])[1].tobytes()
 
