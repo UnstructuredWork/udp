@@ -1,10 +1,10 @@
 import struct
 
-from .server import Server
+from .cam_server import CamServer
 from datetime import datetime
 
 
-class StereoServer(Server):
+class StereoServer(CamServer):
     def __init__(self, info, dname):
         super().__init__(info, dname)
 

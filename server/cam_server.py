@@ -14,7 +14,7 @@ from turbojpeg import TurboJPEG
 logger = logging.getLogger('__main__')
 
 
-class Server:
+class CamServer:
     def __init__(self, info, dname):
         self.dname = dname
 

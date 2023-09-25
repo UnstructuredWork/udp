@@ -3,11 +3,11 @@ import pickle
 import struct
 import numpy as np
 
-from .server import Server
+from .cam_server import CamServer
 from datetime import datetime
 
 
-class RgbdServer(Server):
+class RgbdServer(CamServer):
     def __init__(self, info, dname):
         super().__init__(info, dname)
 
