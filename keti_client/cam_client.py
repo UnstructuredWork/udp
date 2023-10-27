@@ -19,7 +19,8 @@ class CamClient(Base):
             self.pack_cloud = CamPackage(self.cfg.CLOUD, side)
 
         if cfg.UNITY.SEND:
-            self.pack_unity = CamPackage(self.cfg.UNITY, side)
+            if side != "RGBD":
+                self.pack_unity = CamPackage(self.cfg.UNITY, side)
 
     def send_udp(self, package):
         size = len(package.frame)
